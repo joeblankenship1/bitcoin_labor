@@ -26,7 +26,10 @@ a, a:visited, a:hover {
 }
 
 #intro {
-    max-width: 40rem;
+    height: 100vh;
+	width: auto;
+	padding: 5px 5px;
+    /*max-width: 40rem;*/
     margin: 1rem auto;
     text-align: center;
 }
