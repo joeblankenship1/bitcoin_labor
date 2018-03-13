@@ -1,25 +1,38 @@
 (function() {
 
     // request the JSON country and bitnode files
-    var countryJson = d3.json("data/countries.json")
+    var countryJson = d3.json("data/countries.json"),
+        bitnodesJson = d3.json("data/bitnodes.json"),
+        cablesJson = d3.json("data/cables.json"),
+        landingPointsJson = d3.json("data/landingPoints.json")
 
     //use promise to call files, then call drawMap function
-    Promise.all([countryJson]).then(drawMap, error);
+    Promise.all([countryJson, bitnodesJson, cablesJson, landingPointsJson]).then(drawMap, error);
 
     // function fired if there is an error
     function error(error) {
         console.log(error)
     }
 
+    // using d3 for convenience
+    var container = d3.select('#scroll');
+    var graphic = container.select('.scroll__graphic');
+    var scrollmap = graphic.select('.scrollmap');
+    var text = container.select('.scroll__text');
+    var step = text.selectAll('.step');
+    // initialize the scrollama
+    var scroller = scrollama();
+
     // accepts the data as a parameter countrysData
     function drawMap(data, width, height) {
 
         // data is array of our two datasets
-        var countryData = data[0]
+        var countryData = data[0],
+            bitnodesData = data[1]
 
         // define width and height of our SVG
-        var width = 960,
-            height = 600
+        var width = 1300,
+            height = 780
 
         // select the map element
         var svg = d3.select(".scrollmap")
@@ -50,16 +63,30 @@
             .append("path") // append new path elements for each data feature
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
+
+        updateLayers(data, svg, geojson, projection, path, 1);
     }
 
-    // using d3 for convenience
-    var container = d3.select('#scroll');
-    var graphic = container.select('.scroll__graphic');
-    var scrollmap = graphic.select('.scrollmap');
-    var text = container.select('.scroll__text');
-    var step = text.selectAll('.step');
-    // initialize the scrollama
-    var scroller = scrollama();
+    function updateLayers(data, svg, geojson, projection, path, i) {
+
+        layer = data[i];
+
+        var newLayer = svg.append("g")
+            .selectAll("circle")
+            .data(layer)
+            .enter() // enter the selection
+            .append("circle")
+            .attr("cx", function(d) { // define the x position
+                d.position = projection([d.LON, d.LAT]);
+                return d.position[0];
+            })
+            .attr("cy", function(d) {
+                return d.position[1];
+            })
+            .attr("r", 3)
+            .attr("class", "bitnode")
+    }
+
     // generic window resize listener event
     function handleResize() {
         // 1. update height of step elements
@@ -79,28 +106,28 @@
         // 3. tell scrollama to update new element dimensions
         scroller.resize();
     }
+
     // scrollama event handlers
     function handleStepEnter(response) {
         // response = { element, direction, index }
-        // add color to current step only
-        step.classed('is-active', function (d, i) {
-            return i === response.index;
-        })
         // update graphic based on step
         scrollmap.select('p').text(response.index + 1)
     }
+
     function handleContainerEnter(response) {
         // response = { direction }
         // sticky the graphic (old school)
         graphic.classed('is-fixed', true);
         graphic.classed('is-bottom', false);
     }
+
     function handleContainerExit(response) {
         // response = { direction }
         // un-sticky the graphic, and pin to top/bottom of container
         graphic.classed('is-fixed', false);
         graphic.classed('is-bottom', response.direction === 'down');
     }
+
     function init() {
         // 1. force a resize on load to ensure proper dimensions are sent to scrollama
         handleResize();

@@ -53,7 +53,7 @@ a, a:visited, a:hover {
 }
 
 #interactivemap {
-    height: 600px;
+    height: 800px;
     width: 100%;
     top: 0;
     bottom: 0;
@@ -98,6 +98,20 @@ a, a:visited, a:hover {
     -moz-transform: translateY(0%);
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
+}
+
+.bitnode {
+    color: #000000;
+    stroke: whitesmoke;
+    stroke-width: .3;
+    opacity: .8;
+}
+
+.landing_point {
+    color: #258f18;
+    stroke: whitesmoke;
+    stroke-width: .3;
+    opacity: .8;
 }
 
 .scroll__text {
