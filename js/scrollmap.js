@@ -2,7 +2,7 @@
     // using d3 for convenience
     var container = d3.select('#scroll');
     var graphic = container.select('.scroll__graphic');
-    var chart = graphic.select('.chart');
+    var scrollmap = graphic.select('.scrollmap');
     var text = container.select('.scroll__text');
     var step = text.selectAll('.step');
     // initialize the scrollama
@@ -17,11 +17,11 @@
         graphic
             .style('width', bodyWidth + 'px')
             .style('height', window.innerHeight + 'px');
-        var chartMargin = 32;
+        var scrollmapMargin = 32;
         var textWidth = text.node().offsetWidth;
-        var chartWidth = graphic.node().offsetWidth - textWidth - chartMargin;
-        chart
-            .style('width', chartWidth + 'px')
+        var scrollmapWidth = graphic.node().offsetWidth - textWidth - scrollmapMargin;
+        scrollmap
+            .style('width', scrollmapWidth + 'px')
             .style('height', Math.floor(window.innerHeight / 2) + 'px');
         // 3. tell scrollama to update new element dimensions
         scroller.resize();
@@ -34,7 +34,7 @@
             return i === response.index;
         })
         // update graphic based on step
-        chart.select('p').text(response.index + 1)
+        scrollmap.select('p').text(response.index + 1)
     }
     function handleContainerEnter(response) {
         // response = { direction }

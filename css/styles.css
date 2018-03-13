@@ -34,10 +34,6 @@ a, a:visited, a:hover {
     text-align: center;
 }
 
-.intro__overline {
-    font-size: 1.4rem;
-}
-
 .intro__hed {
     font-size: 1.4rem;
     margin: 1.5rem auto;
@@ -95,7 +91,7 @@ a, a:visited, a:hover {
     top: auto;
 }
 
-.chart {
+.scrollmap {
     position: absolute;
     right: 1rem;
     top: 50%;
@@ -106,7 +102,7 @@ a, a:visited, a:hover {
     border: 1px solid #000;
 }
 
-.chart p {
+.scrollmap p {
     text-align: center;
     padding: 1rem;
     position: absolute;
@@ -129,11 +125,6 @@ a, a:visited, a:hover {
 
 .step {
     margin: 2rem auto;
-    border: 1px solid #333;
-}
-
-.step.is-active {
-    background-color: lightgoldenrodyellow;
 }
 
 .step p {
