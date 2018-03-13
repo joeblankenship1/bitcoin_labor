@@ -1,7 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
 html, body {
     margin: 0;
     padding: 0;
@@ -27,8 +23,8 @@ a, a:visited, a:hover {
 
 #intro {
     height: 100vh;
-	width: auto;
-	padding: 5px 5px;
+    width: auto;
+    padding: 5px 5px;
     /*max-width: 40rem;*/
     margin: 1rem auto;
     text-align: center;
@@ -46,12 +42,6 @@ a, a:visited, a:hover {
     font-size: 1.4rem;
 }
 
-/* demo */
-
-#intro {
-    margin-bottom: 320px;
-}
-
 #interactivemap {
     height: 800px;
     width: 100%;
@@ -59,16 +49,50 @@ a, a:visited, a:hover {
     bottom: 0;
 }
 
+#ui-controls {
+    width: 176px;
+    padding: 8px 25px 8px 15px;
+    background: rgba(75, 75, 75, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color: whitesmoke;
+}
+
+.checkbox {
+    width: 100%;
+}
+
+.leaflet-tooltip {
+    min-width: 140px;
+    font-size: 140%;
+    white-space: normal;
+}
+
 #outro {
-    height: 640px;
+    height: 800px;
+    width: auto;
+    padding: 5px 5px;
+    /*max-width: 40rem;*/
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.outro__hed {
+    font-size: 1.4rem;
+    margin: 1.5rem auto;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+}
+
+.outro__dek {
+    font-size: 1.4rem;
 }
 
 /* scrollama */
 
 #scroll {
     position: relative;
-    border-top: 1px dashed #000;
-    border-bottom: 1px dashed #000;
 }
 
 .scroll__graphic {
