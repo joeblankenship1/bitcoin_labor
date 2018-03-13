@@ -76,7 +76,6 @@ a, a:visited, a:hover {
     top: 0;
     left: 0;
     bottom: auto;
-    background-color: #fff;
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
@@ -93,27 +92,12 @@ a, a:visited, a:hover {
 
 .scrollmap {
     position: absolute;
+    fill: #d1c62f;
     right: 1rem;
-    top: 50%;
-    -moz-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    background-color: #ddd;
-    border: 1px solid #000;
-}
-
-.scrollmap p {
-    text-align: center;
-    padding: 1rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -moz-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-size: 8rem;
-    font-weight: 900;
-    color: #666;
+    top: 0;
+    -moz-transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
 }
 
 .scroll__text {

@@ -1,4 +1,57 @@
 (function() {
+
+    // request the JSON country and bitnode files
+    var countryJson = d3.json("data/countries.json")
+
+    //use promise to call files, then call drawMap function
+    Promise.all([countryJson]).then(drawMap, error);
+
+    // function fired if there is an error
+    function error(error) {
+        console.log(error)
+    }
+
+    // accepts the data as a parameter countrysData
+    function drawMap(data, width, height) {
+
+        // data is array of our two datasets
+        var countryData = data[0]
+
+        // define width and height of our SVG
+        var width = 960,
+            height = 600
+
+        // select the map element
+        var svg = d3.select(".scrollmap")
+            .append("svg") // append a new SVG element
+            .attr("width", width) // give the SVS element a width attribute and value
+            .attr("height", height) // same for the height
+
+        // get the GeoJSON representation of the TopoJSON data
+        var geojson = topojson.feature(countryData, {
+            type: "GeometryCollection",
+            geometries: countryData.objects.ne_110m_admin_0_countries.geometries
+        })
+
+        // define a projection using the US Albers USA
+        // fit the extent of the GeoJSON data to specified width and height
+        var projection = d3.geoNaturalEarth1()
+            .fitSize([width, height], geojson)
+
+        // define a path generator, which will use the specified projection
+        var path = d3.geoPath()
+            .projection(projection)
+
+        // create and append a new SVG g element to the SVG
+        var countries = svg.append("g")
+            .selectAll("path") // select all the paths (that don't exist yet)
+            .data(geojson.features) // use the GeoJSON data
+            .enter() // enter the selection
+            .append("path") // append new path elements for each data feature
+            .attr("d", path) // give each path a d attribute value
+            .attr("class", "scrollmap") // give each path a class of country
+    }
+
     // using d3 for convenience
     var container = d3.select('#scroll');
     var graphic = container.select('.scroll__graphic');
@@ -22,7 +75,7 @@
         var scrollmapWidth = graphic.node().offsetWidth - textWidth - scrollmapMargin;
         scrollmap
             .style('width', scrollmapWidth + 'px')
-            .style('height', Math.floor(window.innerHeight / 2) + 'px');
+            .style('height', Math.floor(window.innerHeight) + 'px');
         // 3. tell scrollama to update new element dimensions
         scroller.resize();
     }
