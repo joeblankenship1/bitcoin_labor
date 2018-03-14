@@ -138,8 +138,7 @@ a, a:visited, a:hover {
 .cables {
     line-width: 2;
     line-color: #1556fc;
-    line-opacity: 1;
-    line-comp-op: overlay;
+    line-opacity: 0.8;
 }
 
 .scroll__text {

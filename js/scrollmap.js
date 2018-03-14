@@ -7,7 +7,7 @@
         landingPointsJson = d3.json("data/landingPoints.json")
 
     //use promise to call files, then call drawMap function
-    Promise.all([countryJson, bitnodesJson, cablesJson, landingPointsJson]).then(drawMap, error);
+    Promise.all([countryJson, bitnodesJson, cablesJson, landingPointsJson]).then(init, error);
 
     // function fired if there is an error
     function error(error) {
@@ -22,6 +22,27 @@
     var step = text.selectAll('.step');
     // initialize the scrollama
     var scroller = scrollama();
+
+    function init(data) {
+        // 1. force a resize on load to ensure proper dimensions are sent to scrollama
+        handleResize();
+        // 2. setup the scroller passing options
+        // this will also initialize trigger observations
+        // 3. bind scrollama event handlers (this can be chained like below)
+        scroller.setup({
+            container: '#scroll',
+            graphic: '.scroll__graphic',
+            text: '.scroll__text',
+            step: '.scroll__text .step',
+        })
+            .onStepEnter(handleStepEnter)
+            .onContainerEnter(handleContainerEnter)
+            .onContainerExit(handleContainerExit);
+        // setup resize event
+        window.addEventListener('resize', handleResize);
+
+        drawMap(data);
+    }
 
     // accepts the data as a parameter countrysData
     function drawMap(data, width, height) {
@@ -64,8 +85,9 @@
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
 
-        // addBitnodes(data, svg, geojson, projection, path, width, height);
-        addLandingPoints(data, svg, geojson, projection, path, width, height);
+        //addBitnodes(data, svg, geojson, projection, path, width, height);
+        //addLandingPoints(data, svg, geojson, projection, path, width, height);
+        //addCables(data, svg, projection, path, width, height);
 
     }
 
@@ -109,13 +131,13 @@
             .attr("class", "landing_point")
     }
 
-    function addCables(data, svg, geojson, projection, path, width, height) {
+    function addCables(data, svg, projection, path, width, height) {
 
         cablesData = data[2];
 
         var cables = svg.append("g")
             .selectAll("path")
-            .data(cablesData)
+            .data(cablesData.features)
             .enter()
             .append("path")
             .attr("d", path)
@@ -149,13 +171,18 @@
         //scrollmap.select('p').text(response.index + 1)
         // place if/else if statements here for each response index
         // call to update map for cables, landingPoints, and bitnodes
-        /*if (response.index == 1) {
-            scrollmap.select('scrollmap').addBitnodes(data, svg, geojson, projection, path, width, height);
+        if (response.index == 0) {
+            addBitnodes(data, svg, geojson, projection, path, width, height);
         }
-        else if (response.index == 2) {
+
+        if (response.index == 1) {
             addLandingPoints(data, svg, geojson, projection, path, width, height);
-            //addCables(data, svg, geojson, projection, path);
-        }*/
+
+        }
+
+        if (response.index == 2) {
+            addCables(data, svg, projection, path, width, height);
+        }
     }
 
     function handleContainerEnter(response) {
@@ -172,24 +199,4 @@
         graphic.classed('is-bottom', response.direction === 'down');
     }
 
-    function init() {
-        // 1. force a resize on load to ensure proper dimensions are sent to scrollama
-        handleResize();
-        // 2. setup the scroller passing options
-        // this will also initialize trigger observations
-        // 3. bind scrollama event handlers (this can be chained like below)
-        scroller.setup({
-            container: '#scroll',
-            graphic: '.scroll__graphic',
-            text: '.scroll__text',
-            step: '.scroll__text .step',
-        })
-            .onStepEnter(handleStepEnter)
-            .onContainerEnter(handleContainerEnter)
-            .onContainerExit(handleContainerExit);
-        // setup resize event
-        window.addEventListener('resize', handleResize);
-    }
-    // kick things off
-    init();
 })();
