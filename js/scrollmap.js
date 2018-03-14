@@ -64,22 +64,22 @@
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
 
-        addBitnodes(data, svg, geojson, projection);
-        addLandingPoints(data, svg, geojson, projection);
+        // addBitnodes(data, svg, geojson, projection, path, width, height);
+        addLandingPoints(data, svg, geojson, projection, path, width, height);
 
     }
 
-    function addBitnodes(data, svg, geojson, projection) {
+    function addBitnodes(data, svg, geojson, projection, path, width, height) {
 
         bitnodesData = data[1];
 
         var bitnodes = svg.append("g")
             .selectAll("circle")
-            .data(bitnodesData)
+            .data(bitnodesData.features)
             .enter() // enter the selection
             .append("circle")
             .attr("cx", function(d) { // define the x position
-                d.position = projection([d.LON, d.LAT]);
+                d.position = projection([d.properties.LON, d.properties.LAT]);
                 return d.position[0];
             })
             .attr("cy", function(d) {
@@ -89,17 +89,17 @@
             .attr("class", "bitnode")
     }
 
-    function addLandingPoints(data, svg, geojson, projection) {
+    function addLandingPoints(data, svg, geojson, projection, path, width, height) {
 
         landingPointsData = data[3];
 
         var landingPoints = svg.append("g")
             .selectAll("circle")
-            .data(landingPointsData)
+            .data(landingPointsData.features)
             .enter() // enter the selection
             .append("circle")
             .attr("cx", function(d) { // define the x position
-                d.position = projection([d.LON, d.LAT]);
+                d.position = projection([d.properties.LON, d.properties.LAT]);
                 return d.position[0];
             })
             .attr("cy", function(d) {
@@ -109,7 +109,7 @@
             .attr("class", "landing_point")
     }
 
-    function addCables(data, svg, geojson, projection, path) {
+    function addCables(data, svg, geojson, projection, path, width, height) {
 
         cablesData = data[2];
 
@@ -143,18 +143,18 @@
     }
 
     // scrollama event handlers
-    function handleStepEnter(response, data, svg, geojson, projection, path) {
+    function handleStepEnter(response, data, svg, geojson, projection, path, width, height) {
         // response = { element, direction, index }
         // update graphic based on step
         //scrollmap.select('p').text(response.index + 1)
         // place if/else if statements here for each response index
         // call to update map for cables, landingPoints, and bitnodes
         /*if (response.index == 1) {
-            addBitnodes(data, svg, geojson, projection);
+            scrollmap.select('scrollmap').addBitnodes(data, svg, geojson, projection, path, width, height);
         }
-        else if (response.index ==2) {
-            addLandingPoints(data, svg, geojson, projection);
-            addCables(data, svg, geojson, projection, path);
+        else if (response.index == 2) {
+            addLandingPoints(data, svg, geojson, projection, path, width, height);
+            //addCables(data, svg, geojson, projection, path);
         }*/
     }
 

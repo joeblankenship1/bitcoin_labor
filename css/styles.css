@@ -119,20 +119,17 @@ a, a:visited, a:hover {
     fill: #d1c62f;
     right: 1rem;
     top: 0;
-    -moz-transform: translateY(0%);
-    -webkit-transform: translateY(0%);
-    transform: translateY(0%);
 }
 
 .bitnode {
-    color: #d1c62f;
+    color: #9a9547;
     stroke: #000000;
     stroke-width: .3;
     opacity: .8;
 }
 
 .landing_point {
-    color: #258f18;
+    color: #8f1818;
     stroke: whitesmoke;
     stroke-width: .3;
     opacity: .8;
