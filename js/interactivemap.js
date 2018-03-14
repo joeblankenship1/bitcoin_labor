@@ -82,8 +82,7 @@
                     };
                 }
             }).addTo(map);
-        }
-        else if (currentLayer == landingPoints) {
+        } else if (currentLayer == landingPoints) {
             var geojsonMarkerOptions = {
                 radius: 3,
                 fillColor: "#73b553",
@@ -98,8 +97,7 @@
                     return L.circleMarker(latlng, geojsonMarkerOptions)
                 }
             }).addTo(map);
-        }
-        else if (currentLayer == bitnodes_data) {
+        } else if (currentLayer == bitnodes_data) {
             var geojsonMarkerOptions = {
                 radius: 2,
                 fillColor: "#ffcd37",
@@ -114,8 +112,7 @@
                     return L.circleMarker(latlng, geojsonMarkerOptions)
                 }
             }).addTo(map);
-        }
-        else if (currentLayer == 'bitnodes_density') {
+        } else if (currentLayer == 'bitnodes_density') {
             var locations = bitnodes_data.features.map(function(nodes) {
                 var location = nodes.geometry.coordinates.reverse();
                 location.push(0.5);
@@ -130,8 +127,7 @@
                 blur: 0
             });
             map.addLayer(heat);
-        }
-        else if (currentLayer == 'landingPoint_density') {
+        } else if (currentLayer == 'landingPoint_density') {
             var locations = landingPoints.features.map(function(points) {
                 var location = points.geometry.coordinates.reverse();
                 location.push(0.5);

@@ -64,16 +64,18 @@
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
 
-        updateLayers(data, svg, geojson, projection, path, 1);
+        addBitnodes(data, svg, geojson, projection);
+        addLandingPoints(data, svg, geojson, projection);
+
     }
 
-    function updateLayers(data, svg, geojson, projection, path, i) {
+    function addBitnodes(data, svg, geojson, projection) {
 
-        layer = data[i];
+        bitnodesData = data[1];
 
-        var newLayer = svg.append("g")
+        var bitnodes = svg.append("g")
             .selectAll("circle")
-            .data(layer)
+            .data(bitnodesData)
             .enter() // enter the selection
             .append("circle")
             .attr("cx", function(d) { // define the x position
@@ -85,6 +87,39 @@
             })
             .attr("r", 3)
             .attr("class", "bitnode")
+    }
+
+    function addLandingPoints(data, svg, geojson, projection) {
+
+        landingPointsData = data[3];
+
+        var landingPoints = svg.append("g")
+            .selectAll("circle")
+            .data(landingPointsData)
+            .enter() // enter the selection
+            .append("circle")
+            .attr("cx", function(d) { // define the x position
+                d.position = projection([d.LON, d.LAT]);
+                return d.position[0];
+            })
+            .attr("cy", function(d) {
+                return d.position[1];
+            })
+            .attr("r", 3)
+            .attr("class", "landing_point")
+    }
+
+    function addCables(data, svg, geojson, projection, path) {
+
+        cablesData = data[2];
+
+        var cables = svg.append("g")
+            .selectAll("path")
+            .data(cablesData)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .attr("class", "cables")
     }
 
     // generic window resize listener event
@@ -108,10 +143,19 @@
     }
 
     // scrollama event handlers
-    function handleStepEnter(response) {
+    function handleStepEnter(response, data, svg, geojson, projection, path) {
         // response = { element, direction, index }
         // update graphic based on step
-        scrollmap.select('p').text(response.index + 1)
+        //scrollmap.select('p').text(response.index + 1)
+        // place if/else if statements here for each response index
+        // call to update map for cables, landingPoints, and bitnodes
+        /*if (response.index == 1) {
+            addBitnodes(data, svg, geojson, projection);
+        }
+        else if (response.index ==2) {
+            addLandingPoints(data, svg, geojson, projection);
+            addCables(data, svg, geojson, projection, path);
+        }*/
     }
 
     function handleContainerEnter(response) {
