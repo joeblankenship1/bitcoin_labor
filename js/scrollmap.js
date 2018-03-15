@@ -34,6 +34,8 @@
             graphic: '.scroll__graphic',
             text: '.scroll__text',
             step: '.scroll__text .step',
+            offset: 0.25, // set the trigger to be 1/2 way down screen
+			//debug: true, // display the trigger offset for testing
         })
             .onStepEnter(handleStepEnter)
             .onContainerEnter(handleContainerEnter)
@@ -45,11 +47,10 @@
     }
 
     // accepts the data as a parameter countrysData
-    function drawMap(data, width, height) {
+    function drawMap(data, switchLayer) {
 
         // data is array of our two datasets
-        var countryData = data[0],
-            bitnodesData = data[1]
+        var countryData = data[0]
 
         // define width and height of our SVG
         var width = 1300,
@@ -85,9 +86,15 @@
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
 
-        addBitnodes(data, svg, geojson, projection, path, width, height);
-        addLandingPoints(data, svg, geojson, projection, path, width, height);
-        addCables(data, svg, projection, path, width, height);
+        if (switchLayer == 'bnLayer') {
+            addBitnodes(data, svg, geojson, projection, path, width, height);
+        }
+        else if (switchLayer == 'lpLayer') {
+            addLandingPoints(data, svg, geojson, projection, path, width, height);
+        }
+        else if (switchLayer == 'cLayer') {
+            addCables(data, svg, projection, path, width, height);
+        }
 
     }
 
@@ -134,7 +141,7 @@
     function addCables(data, svg, projection, path, width, height) {
 
         cablesData = data[2];
-        
+
         var cables = svg.append("g")
             .selectAll("path")
             .data(cablesData.features)
@@ -165,24 +172,22 @@
     }
 
     // scrollama event handlers
-    function handleStepEnter(response, data, svg, geojson, projection, path, width, height) {
+    function handleStepEnter(response, data) {
         // response = { element, direction, index }
-        // update graphic based on step
-        //scrollmap.select('p').text(response.index + 1)
+
         // place if/else if statements here for each response index
         // call to update map for cables, landingPoints, and bitnodes
-        /*if (response.index == 0) {
-            addBitnodes(data, svg, geojson, projection, path, width, height);
+        if (response.index == 0) {
+            drawMap(data, 'bnLayer');
         }
 
         if (response.index == 1) {
-            addLandingPoints(data, svg, geojson, projection, path, width, height);
-
+            drawMap(data, 'lpLayer');
         }
 
         if (response.index == 2) {
-            addCables(data, svg, projection, path, width, height);
-        }*/
+            drawMap(data, 'cLayer');
+        }
     }
 
     function handleContainerEnter(response) {
