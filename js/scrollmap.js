@@ -85,9 +85,9 @@
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
 
-        //addBitnodes(data, svg, geojson, projection, path, width, height);
-        //addLandingPoints(data, svg, geojson, projection, path, width, height);
-        //addCables(data, svg, projection, path, width, height);
+        addBitnodes(data, svg, geojson, projection, path, width, height);
+        addLandingPoints(data, svg, geojson, projection, path, width, height);
+        addCables(data, svg, projection, path, width, height);
 
     }
 
@@ -134,7 +134,7 @@
     function addCables(data, svg, projection, path, width, height) {
 
         cablesData = data[2];
-
+        
         var cables = svg.append("g")
             .selectAll("path")
             .data(cablesData.features)
@@ -171,7 +171,7 @@
         //scrollmap.select('p').text(response.index + 1)
         // place if/else if statements here for each response index
         // call to update map for cables, landingPoints, and bitnodes
-        if (response.index == 0) {
+        /*if (response.index == 0) {
             addBitnodes(data, svg, geojson, projection, path, width, height);
         }
 
@@ -182,7 +182,7 @@
 
         if (response.index == 2) {
             addCables(data, svg, projection, path, width, height);
-        }
+        }*/
     }
 
     function handleContainerEnter(response) {

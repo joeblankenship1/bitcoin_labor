@@ -42,6 +42,74 @@ a, a:visited, a:hover {
     font-size: 1.4rem;
 }
 
+#scroll {
+    position: relative;
+}
+
+.scroll__graphic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: auto;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.scroll__graphic.is-fixed {
+    position: fixed;
+}
+
+.scroll__graphic.is-bottom {
+    bottom: 0;
+    top: auto;
+}
+
+.scroll__graphic .scrollmap {
+  position: absolute;
+  fill: #494747;
+  right: 1rem;
+  top: 0;
+  -moz-transform: translateY(0);
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.bitnode {
+    fill: #dad147;
+    stroke: #ffffff;
+    stroke-width: .3;
+}
+
+.landing_point {
+    fill: #ff5959;
+    stroke: #163bd6;
+}
+
+.cables {
+    fill: none;
+    stroke: #163bd6;
+    stroke-dasharray: 2,1;
+    stroke-linejoin: round;
+}
+
+.scroll__text {
+    position: relative;
+    padding: 0 1rem;
+    max-width: 30rem;
+    width: 33%;
+}
+
+.step {
+    margin: 2rem auto;
+}
+
+.step p {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
 #interactivemap {
     height: 800px;
     width: 100%;
@@ -87,73 +155,4 @@ a, a:visited, a:hover {
 
 .outro__dek {
     font-size: 1.4rem;
-}
-
-/* scrollama */
-
-#scroll {
-    position: relative;
-}
-
-.scroll__graphic {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: auto;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
-.scroll__graphic.is-fixed {
-    position: fixed;
-}
-
-.scroll__graphic.is-bottom {
-    bottom: 0;
-    top: auto;
-}
-
-.scrollmap {
-    position: absolute;
-    fill: #d1c62f;
-    right: 1rem;
-    top: 0;
-}
-
-.bitnode {
-    color: #9a9547;
-    stroke: #000000;
-    stroke-width: .3;
-    opacity: .8;
-}
-
-.landing_point {
-    color: #8f1818;
-    stroke: whitesmoke;
-    stroke-width: .3;
-    opacity: .8;
-}
-
-.cables {
-    line-width: 2;
-    line-color: #1556fc;
-    line-opacity: 0.8;
-}
-
-.scroll__text {
-    position: relative;
-    padding: 0 1rem;
-    max-width: 30rem;
-    width: 33%;
-}
-
-.step {
-    margin: 2rem auto;
-}
-
-.step p {
-    text-align: center;
-    padding: 1rem;
-    font-size: 1.5rem;
 }
