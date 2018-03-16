@@ -34,7 +34,7 @@
             graphic: '.scroll__graphic',
             text: '.scroll__text',
             step: '.scroll__text .step',
-            offset: 0.25, // set the trigger to be 1/2 way down screen
+            offset: 0.85, // set the trigger to be 85% down screen
 			//debug: true, // display the trigger offset for testing
         })
             .onStepEnter(handleStepEnter)
@@ -47,14 +47,14 @@
     }
 
     // accepts the data as a parameter countrysData
-    function drawMap(data, switchLayer) {
+    function drawMap(data) {
 
         // data is array of our two datasets
         var countryData = data[0]
 
         // define width and height of our SVG
-        var width = 1300,
-            height = 780
+        var width = scrollmap.node().offsetWidth
+        var height = scrollmap.node().offsetHeight
 
         // select the map element
         var svg = d3.select(".scrollmap")
@@ -86,15 +86,12 @@
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
 
-        if (switchLayer == 'bnLayer') {
-            addBitnodes(data, svg, geojson, projection, path, width, height);
-        }
-        else if (switchLayer == 'lpLayer') {
-            addLandingPoints(data, svg, geojson, projection, path, width, height);
-        }
-        else if (switchLayer == 'cLayer') {
-            addCables(data, svg, projection, path, width, height);
-        }
+        //
+        addBitnodes(data, svg, geojson, projection, path, width, height);
+        //
+        addLandingPoints(data, svg, geojson, projection, path, width, height);
+        //
+        addCables(data, svg, projection, path, width, height);
 
     }
 
@@ -151,11 +148,58 @@
             .attr("class", "cables")
     }
 
+    function updateMap(num) {
+
+        const t = d3.transition()
+                    .duration(400)
+                    .ease(d3.easeLinear);
+
+        const bitnodes = d3.selectAll(".bitnode");
+        const landingPoints = d3.selectAll(".landing_point");
+        const cables = d3.selectAll(".cables");
+
+        const switchLayer = {
+            zero: () => {
+                bitnodes.transition(t).style("opacity", 0)
+                landingPoints.transition(t).style("opacity", 0)
+                cables.transition(t).style("opacity", 0)
+            },
+            one: () => {
+                bitnodes.transition(t).style("opacity", 1)
+                landingPoints.transition(t).style("opacity", 0)
+                cables.transition(t).style("opacity", 0)
+            },
+            two: () => {
+                bitnodes.transition(t).style("opacity", 1)
+                landingPoints.transition(t).style("opacity", 1)
+                cables.transition(t).style("opacity", 0)
+            },
+            three: () => {
+                bitnodes.transition(t).style("opacity", 0)
+                landingPoints.transition(t).style("opacity", 1)
+                cables.transition(t).style("opacity", 1)
+            }
+        }
+
+        switch (num) {
+            case 0: switchLayer.zero()
+            break
+            case 1: switchLayer.one()
+            break
+            case 2: switchLayer.two()
+            break
+            case 3: switchLayer.three()
+            break
+        }
+
+    }
+
     // generic window resize listener event
     function handleResize() {
         // 1. update height of step elements
         var stepHeight = Math.floor(window.innerHeight * 0.75);
         step.style('height', stepHeight + 'px');
+
         // 2. update width/height of graphic element
         var bodyWidth = d3.select('body').node().offsetWidth;
         graphic
@@ -167,6 +211,7 @@
         scrollmap
             .style('width', scrollmapWidth + 'px')
             .style('height', Math.floor(window.innerHeight) + 'px');
+
         // 3. tell scrollama to update new element dimensions
         scroller.resize();
     }
@@ -175,19 +220,12 @@
     function handleStepEnter(response, data) {
         // response = { element, direction, index }
 
-        // place if/else if statements here for each response index
-        // call to update map for cables, landingPoints, and bitnodes
-        if (response.index == 0) {
-            drawMap(data, 'bnLayer');
-        }
+        // add color to current step only
+        step.classed('is-active', function (d, i) {
+            return i === response.index;
+        })
 
-        if (response.index == 1) {
-            drawMap(data, 'lpLayer');
-        }
-
-        if (response.index == 2) {
-            drawMap(data, 'cLayer');
-        }
+        updateMap(response.index)
     }
 
     function handleContainerEnter(response) {
@@ -197,8 +235,7 @@
         graphic.classed('is-bottom', false);
     }
 
-    function handleContainerExit(response) {
-        // response = { direction }
+    function handleContainerExit(response) {        // response = { direction }
         // un-sticky the graphic, and pin to top/bottom of container
         graphic.classed('is-fixed', false);
         graphic.classed('is-bottom', response.direction === 'down');

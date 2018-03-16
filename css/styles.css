@@ -79,11 +79,13 @@ a, a:visited, a:hover {
     fill: #dad147;
     stroke: #ffffff;
     stroke-width: .3;
+    opacity: 0;
 }
 
 .landing_point {
     fill: #ff5959;
     stroke: #163bd6;
+    opacity: 0;
 }
 
 .cables {
@@ -91,6 +93,7 @@ a, a:visited, a:hover {
     stroke: #163bd6;
     stroke-dasharray: 2,1;
     stroke-linejoin: round;
+    opacity: 0;
 }
 
 .scroll__text {
