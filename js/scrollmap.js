@@ -34,7 +34,7 @@
             graphic: '.scroll__graphic',
             text: '.scroll__text',
             step: '.scroll__text .step',
-            offset: 0.85, // set the trigger to be 85% down screen
+            offset: 0.95, // set the trigger to be 95% down screen
 			//debug: true, // display the trigger offset for testing
         })
             .onStepEnter(handleStepEnter)

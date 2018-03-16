@@ -21,9 +21,18 @@ a, a:visited, a:hover {
     border-bottom: 1px solid currentColor;
 }
 
+hr {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+}
+
 #intro {
-    height: 100vh;
-    width: auto;
+    height: 100vh auto;
+    width: 50%;
     padding: 5px 5px;
     /*max-width: 40rem;*/
     margin: 1rem auto;
@@ -31,7 +40,7 @@ a, a:visited, a:hover {
 }
 
 .intro__hed {
-    font-size: 1.4rem;
+    font-size: 3rem;
     margin: 1.5rem auto;
     text-transform: uppercase;
     font-weight: 900;
@@ -39,7 +48,8 @@ a, a:visited, a:hover {
 }
 
 .intro__dek {
-    font-size: 1.4rem;
+    font-size: 2rem;
+    margin: 3rem auto;
 }
 
 #scroll {
@@ -108,9 +118,15 @@ a, a:visited, a:hover {
 }
 
 .step p {
-    text-align: center;
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 1rem;
     font-size: 1.5rem;
+    margin: 1rem;
+    text-shadow: #FC0 1px 0 10px;
 }
 
 #interactivemap {
@@ -140,8 +156,8 @@ a, a:visited, a:hover {
 }
 
 #outro {
-    height: 800px;
-    width: auto;
+    height: 100vh auto;
+    width: 50%;
     padding: 5px 5px;
     /*max-width: 40rem;*/
     margin: 1rem auto;
@@ -149,7 +165,7 @@ a, a:visited, a:hover {
 }
 
 .outro__hed {
-    font-size: 1.4rem;
+    font-size: 3rem;
     margin: 1.5rem auto;
     text-transform: uppercase;
     font-weight: 900;
@@ -157,5 +173,6 @@ a, a:visited, a:hover {
 }
 
 .outro__dek {
-    font-size: 1.4rem;
+    font-size: 2rem;
+    margin: 3rem auto;
 }
