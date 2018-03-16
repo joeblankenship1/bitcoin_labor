@@ -86,19 +86,22 @@
             .attr("d", path) // give each path a d attribute value
             .attr("class", "scrollmap") // give each path a class of country
 
-        //
+        // add bitnodes data to SVG countries
         addBitnodes(data, svg, geojson, projection, path, width, height);
-        //
+        // add landing points to SVG countries
         addLandingPoints(data, svg, geojson, projection, path, width, height);
-        //
+        // add submarine cables to SVG countries
         addCables(data, svg, projection, path, width, height);
 
     }
 
+    // loads bitnodes to SVG element
     function addBitnodes(data, svg, geojson, projection, path, width, height) {
 
+        // define bitnodes data from Promise index
         bitnodesData = data[1];
 
+        // add bitnodes to SVG element
         var bitnodes = svg.append("g")
             .selectAll("circle")
             .data(bitnodesData.features)
@@ -111,14 +114,17 @@
             .attr("cy", function(d) {
                 return d.position[1];
             })
-            .attr("r", 3)
-            .attr("class", "bitnode")
+            .attr("r", 3) // define size of circle
+            .attr("class", "bitnode") // css styling
     }
 
+    // loads landing points to SVG element
     function addLandingPoints(data, svg, geojson, projection, path, width, height) {
 
+        // define bitnodes data from Promise index
         landingPointsData = data[3];
 
+        // add landing points to SVG element
         var landingPoints = svg.append("g")
             .selectAll("circle")
             .data(landingPointsData.features)
@@ -131,33 +137,40 @@
             .attr("cy", function(d) {
                 return d.position[1];
             })
-            .attr("r", 3)
-            .attr("class", "landing_point")
+            .attr("r", 3) // define size of circle
+            .attr("class", "landing_point") // css styling
     }
 
+    // loads submarine cables to SVG element
     function addCables(data, svg, projection, path, width, height) {
 
+        // define cables data from Promise index
         cablesData = data[2];
 
+        // add cables to SVG element
         var cables = svg.append("g")
             .selectAll("path")
             .data(cablesData.features)
             .enter()
             .append("path")
             .attr("d", path)
-            .attr("class", "cables")
+            .attr("class", "cables") // css styling
     }
 
+    // Setup the scrollmap states for each layer per scrollama step
     function updateMap(num) {
 
+        // set linear fade in/out for each layer
         const t = d3.transition()
                     .duration(400)
                     .ease(d3.easeLinear);
 
+        // define which css styling you need to modify - will render per step
         const bitnodes = d3.selectAll(".bitnode");
         const landingPoints = d3.selectAll(".landing_point");
         const cables = d3.selectAll(".cables");
 
+        // define action for each styling per scrollama step
         const switchLayer = {
             zero: () => {
                 bitnodes.transition(t).style("opacity", 0)
@@ -181,6 +194,8 @@
             }
         }
 
+        // use switchLayer actions above to tell scrollama
+        // how each step should render the layers
         switch (num) {
             case 0: switchLayer.zero()
             break
@@ -225,9 +240,11 @@
             return i === response.index;
         })
 
+        // call to updateMap to render layers per step
         updateMap(response.index)
     }
 
+    // css handling of step elements upon enter
     function handleContainerEnter(response) {
         // response = { direction }
         // sticky the graphic (old school)
@@ -235,7 +252,9 @@
         graphic.classed('is-bottom', false);
     }
 
-    function handleContainerExit(response) {        // response = { direction }
+    // css handling of step elements upon exit
+    function handleContainerExit(response) {
+        // response = { direction }
         // un-sticky the graphic, and pin to top/bottom of container
         graphic.classed('is-fixed', false);
         graphic.classed('is-bottom', response.direction === 'down');
