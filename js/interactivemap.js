@@ -28,7 +28,7 @@
                     return {
                         color: '#163bd6',
                         weight: 1,
-                        opacity: 0.75,
+                        opacity: 0
                     };
                 }
             }).addTo(map);
@@ -40,8 +40,8 @@
                 fillColor: "#ff5959",
                 color: "#163bd6",
                 weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
+                opacity: 0,
+                fillOpacity: 0
             };
 
             var dataLayer = L.geoJSON(data, {
@@ -53,12 +53,12 @@
 
         var bitnodes_data = $.getJSON("data/bitnodes.json", function(data) {
             var geojsonMarkerOptions = {
-                radius: 2,
+                radius: 3,
                 fillColor: "#dad147",
-                color: "#ffffff",
+                color: "#ff5959",
                 weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
+                opacity: 0,
+                fillOpacity: 0
             };
 
             var dataLayer = L.geoJSON(data, {
@@ -78,7 +78,7 @@
             var heat = L.heatLayer(locations, {
                 radius: 25,
                 gradient: {
-                    1: 'orange'
+                    1: '#dad147'
                 },
                 blur: 0
             });
@@ -95,7 +95,7 @@
             var heat = L.heatLayer(locations, {
                 radius: 25,
                 gradient: {
-                    1: 'red'
+                    1: '#ff5959'
                 },
                 blur: 0
             });

@@ -88,7 +88,7 @@ hr {
 
 .bitnode {
     fill: #dad147;
-    stroke: #ffffff;
+    stroke: #ff5959;
     stroke-width: .3;
     opacity: 0;
 }
@@ -96,6 +96,7 @@ hr {
 .landing_point {
     fill: #ff5959;
     stroke: #163bd6;
+    stroke-width: .3;
     opacity: 0;
 }
 
