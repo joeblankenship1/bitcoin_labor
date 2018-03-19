@@ -98,10 +98,10 @@
 
                     var props = layer.feature.properties;
 
-                    var tooltipInfo = "<b>ASN: </b>" + props["ASN"] +
+                    var tooltipInfo = "<b>Organization: </b>" + props["Organization_name"] +
     								"<br><b>City: </b>" + props["City"] +
     								"<br><b>Country: </b>" + props["Country_code"] +
-                                    "<br><b>Connected Since: </b>" + props["Connected_since"];
+                                    "<br><b>ASN: </b>" + props["ASN"];
 
                     layer.bindTooltip('', {
                         sticky: true,
