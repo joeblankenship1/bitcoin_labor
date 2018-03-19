@@ -25,7 +25,8 @@
 
     map.setZoom(map.getZoom() - .2);
 
-    createCheckboxUI();
+    //createCheckboxUI();
+    drawMap();
 
     function createCheckboxUI() {
         // create Leaflet control for slider
@@ -47,12 +48,12 @@
             // event defined as currentYear
             var currentLayer = this.name;
             var currentState = this.checked;
-            drawMap(currentLayer, currentState);
+            //drawMap(currentLayer, currentState);
         });
 
     }
 
-    function drawMap(currentLayer, currentState) {
+    function drawMap() { // currentLayer, currentState
 
         //console.log([currentLayer, currentState]);
 
@@ -81,7 +82,7 @@
                     .setTooltipContent(tooltipInfo);
                 }
             });
-            //map.addLayer(cablesLayer);
+            map.addLayer(cablesLayer);
         });
 
         var landingPoints = $.getJSON("data/landingPoints.json", function(data, currentLayer, currentState) {
@@ -114,7 +115,7 @@
                     .setTooltipContent(tooltipInfo);
                 }
             });
-            //map.addLayer(landingPointsLayer);
+            map.addLayer(landingPointsLayer);
         });
 
         var bitnodes = $.getJSON("data/bitnodes.json", function(data, currentLayer, currentState) {
@@ -148,7 +149,7 @@
                     .setTooltipContent(tooltipInfo);
                 }
             });
-            //map.addLayer(bitnodesLayer);
+            map.addLayer(bitnodesLayer);
         });
 
         var bitnodes_density = $.getJSON("data/bitnodes.json", function(data) {
