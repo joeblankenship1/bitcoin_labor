@@ -27,11 +27,26 @@
                 style: function(feature) {
                     return {
                         color: '#163bd6',
-                        weight: 1,
-                        opacity: 0
+                        weight: 1.5,
+                        opacity: 1
                     };
+                },
+                onEachFeature: function(feature, layer) {
+
+                    var props = layer.feature.properties;
+
+                    var tooltipInfo = "<b>Owners: </b>" + props["owners"] +
+    								"<br><b>Name: </b>" + props["name"] +
+    								"<br><b>Cable ID: </b>" + props["cable_id"] +
+    								"<br><b>RFS: </b>" + props["rfs"];
+
+                    layer.bindTooltip('', {
+                        sticky: true,
+                        tooltipAnchor: [200, 200]
+                    })
+                    .setTooltipContent(tooltipInfo);
                 }
-            }).addTo(map);
+            })//.addTo(map);
         });
 
         var landingPoints = $.getJSON("data/landingPoints.json", function(data) {
@@ -40,15 +55,29 @@
                 fillColor: "#ff5959",
                 color: "#163bd6",
                 weight: 1,
-                opacity: 0,
-                fillOpacity: 0
+                opacity: 1,
+                fillOpacity: 1
             };
 
             var dataLayer = L.geoJSON(data, {
                 pointToLayer: function(feature, latlng) {
                     return L.circleMarker(latlng, geojsonMarkerOptions)
+                },
+                onEachFeature: function(feature, layer) {
+
+                    var props = layer.feature.properties;
+
+                    var tooltipInfo = "<b>Owners: </b>" + props["owners"] +
+    								"<br><b>Name: </b>" + props["name"] +
+    								"<br><b>Cable ID: </b>" + props["cable_id"];
+
+                    layer.bindTooltip('', {
+                        sticky: true,
+                        tooltipAnchor: [200, 200]
+                    })
+                    .setTooltipContent(tooltipInfo);
                 }
-            }).addTo(map);
+            })//.addTo(map);
         });
 
         var bitnodes_data = $.getJSON("data/bitnodes.json", function(data) {
@@ -57,17 +86,33 @@
                 fillColor: "#dad147",
                 color: "#ff5959",
                 weight: 1,
-                opacity: 0,
-                fillOpacity: 0
+                opacity: 1,
+                fillOpacity: 1
             };
 
             var dataLayer = L.geoJSON(data, {
                 pointToLayer: function(feature, latlng) {
                     return L.circleMarker(latlng, geojsonMarkerOptions)
+                },
+                onEachFeature: function(feature, layer) {
+
+                    var props = layer.feature.properties;
+
+                    var tooltipInfo = "<b>ASN: </b>" + props["ASN"] +
+    								"<br><b>City: </b>" + props["City"] +
+    								"<br><b>Country: </b>" + props["Country_code"] +
+                                    "<br><b>Connected Since: </b>" + props["Connected_since"];
+
+                    layer.bindTooltip('', {
+                        sticky: true,
+                        tooltipAnchor: [200, 200]
+                    })
+                    .setTooltipContent(tooltipInfo);
                 }
-            }).addTo(map);
+            })//.addTo(map);
         });
 
+        /*
         var bitnodes_density = $.getJSON("data/bitnodes.json", function(data) {
             var locations = data.features.map(function(nodes) {
                 var location = nodes.geometry.coordinates.reverse();
@@ -101,6 +146,7 @@
             });
             map.addLayer(heat);
         });
+        */
 
         map.fitBounds([
             [90, -180],
