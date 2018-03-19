@@ -18,12 +18,46 @@
         opacity: 0.5
     }).addTo(map);
 
-    drawMap();
+    map.fitBounds([
+        [90, -180],
+        [-90, 180]
+    ]);
 
-    function drawMap() {
+    map.setZoom(map.getZoom() - .2);
+
+    createCheckboxUI();
+
+    function createCheckboxUI() {
+        // create Leaflet control for slider
+        var checkboxControl = L.control({
+            position: 'bottomleft'
+        });
+        // define the ui-control within the DOM
+        checkboxControl.onAdd = function(map) {
+            // use the defined ui-control element
+            var checkbox = L.DomUtil.get("ui-controls");
+            // diable click events
+            L.DomEvent.disableClickPropagation(checkbox);
+            return checkbox;
+        };
+        // add control to map
+        checkboxControl.addTo(map);
+
+        $("input[type='checkbox']").on('input change', function() {
+            // event defined as currentYear
+            var currentLayer = this.name;
+            var currentState = this.checked;
+            drawMap(currentLayer, currentState);
+        });
+
+    }
+
+    function drawMap(currentLayer, currentState) {
+
+        //console.log([currentLayer, currentState]);
 
         var cables = $.getJSON("data/cables.json", function(data) {
-            L.geoJSON(data, {
+            var cablesLayer = L.geoJSON(data, {
                 style: function(feature) {
                     return {
                         color: '#163bd6',
@@ -46,10 +80,12 @@
                     })
                     .setTooltipContent(tooltipInfo);
                 }
-            })//.addTo(map);
+            });
+            //map.addLayer(cablesLayer);
         });
 
-        var landingPoints = $.getJSON("data/landingPoints.json", function(data) {
+        var landingPoints = $.getJSON("data/landingPoints.json", function(data, currentLayer, currentState) {
+
             var geojsonMarkerOptions = {
                 radius: 3,
                 fillColor: "#ff5959",
@@ -59,7 +95,7 @@
                 fillOpacity: 1
             };
 
-            var dataLayer = L.geoJSON(data, {
+            var landingPointsLayer = L.geoJSON(data, {
                 pointToLayer: function(feature, latlng) {
                     return L.circleMarker(latlng, geojsonMarkerOptions)
                 },
@@ -77,10 +113,12 @@
                     })
                     .setTooltipContent(tooltipInfo);
                 }
-            })//.addTo(map);
+            });
+            //map.addLayer(landingPointsLayer);
         });
 
-        var bitnodes_data = $.getJSON("data/bitnodes.json", function(data) {
+        var bitnodes = $.getJSON("data/bitnodes.json", function(data, currentLayer, currentState) {
+
             var geojsonMarkerOptions = {
                 radius: 3,
                 fillColor: "#dad147",
@@ -90,7 +128,7 @@
                 fillOpacity: 1
             };
 
-            var dataLayer = L.geoJSON(data, {
+            var bitnodesLayer = L.geoJSON(data, {
                 pointToLayer: function(feature, latlng) {
                     return L.circleMarker(latlng, geojsonMarkerOptions)
                 },
@@ -109,11 +147,12 @@
                     })
                     .setTooltipContent(tooltipInfo);
                 }
-            })//.addTo(map);
+            });
+            //map.addLayer(bitnodesLayer);
         });
 
-        /*
         var bitnodes_density = $.getJSON("data/bitnodes.json", function(data) {
+
             var locations = data.features.map(function(nodes) {
                 var location = nodes.geometry.coordinates.reverse();
                 location.push(0.5);
@@ -127,7 +166,7 @@
                 },
                 blur: 0
             });
-            map.addLayer(heat);
+            //map.addLayer(heat);
         });
 
         var landingPoint_density = $.getJSON("data/landingPoints.json", function(data) {
@@ -144,59 +183,32 @@
                 },
                 blur: 0
             });
-            map.addLayer(heat);
-        });
-        */
-
-        map.fitBounds([
-            [90, -180],
-            [-90, 180]
-        ]);
-
-        map.setZoom(map.getZoom() - .2);
-
-        createCheckboxUI();
-
-    }
-
-    function createCheckboxUI() {
-        // create Leaflet control for slider
-        var checkboxControl = L.control({
-            position: 'bottomleft'
-        });
-        // define the ui-control within the DOM
-        checkboxControl.onAdd = function(map) {
-            // use the defined ui-control element
-            var checkbox = L.DomUtil.get("ui-controls");
-            // diable click events
-            L.DomEvent.disableClickPropagation(checkbox);
-            return checkbox;
-        };
-        // add control to map
-        checkboxControl.addTo(map);
-
-        $("input[type='checkbox']").on('input change', function() {
-            // event defined as currentYear
-            var currentLayer = this.name;
-            // update the map year
-            //updateMap(currentLayer)
+            //map.addLayer(heat);
         });
 
     }
 
-    function updateMap(currentLayer) {
+    /*function updateMap() {
 
-        if (currentLayer == cables) {
+        console.log([currentLayer, currentState]);
 
-        } else if (currentLayer == landingPoints) {
+        if (currentLayer == 'cables') {
+            if (currentState == true) {
+                map.addLayer(cablesLayer);
+            }
+            else if (currentState == false) {
+                map.removeLayer(cablesLayer);
+            }
+        } else if (currentLayer == 'landingPoints') {
 
-        } else if (currentLayer == bitnodes_data) {
-
-        } else if (currentLayer == bitnodes_density) {
-
-        } else if (currentLayer == landingPoint_density) {
-
+        } else if (currentLayer == 'bitnodes_data') {
+            if (currentState == true) {
+                map.addLayer(bitnodesLayer);
+            }
+            else if (currentState == false) {
+                map.removeLayer(bitnodesLayer);
+            }
         }
-    }
+    }*/
 
 })();
