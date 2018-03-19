@@ -8,6 +8,7 @@
         zoomControl: true,
         center: [20, 0],
         zoom: 3,
+        layer: [tiles]
     };
     // create the Leaflet map
     var map = L.map('interactivemap', options);
@@ -24,38 +25,20 @@
     ]);
 
     map.setZoom(map.getZoom() - .2);
+    map._layersMinZoom=3;
 
     //createCheckboxUI();
-    drawMap();
+    drawMap(tiles);
 
-    function createCheckboxUI() {
-        // create Leaflet control for slider
-        var checkboxControl = L.control({
-            position: 'bottomleft'
-        });
-        // define the ui-control within the DOM
-        checkboxControl.onAdd = function(map) {
-            // use the defined ui-control element
-            var checkbox = L.DomUtil.get("ui-controls");
-            // diable click events
-            L.DomEvent.disableClickPropagation(checkbox);
-            return checkbox;
-        };
-        // add control to map
-        checkboxControl.addTo(map);
-
-        $("input[type='checkbox']").on('input change', function() {
-            // event defined as currentYear
-            var currentLayer = this.name;
-            var currentState = this.checked;
-            //drawMap(currentLayer, currentState);
-        });
-
-    }
-
-    function drawMap() { // currentLayer, currentState
+    function drawMap(tiles) { // currentLayer, currentState
 
         //console.log([currentLayer, currentState]);
+
+        var cablesGroup = L.layerGroup();
+        var landingPointsGroup = L.layerGroup();
+        var bitnodesGroup = L.layerGroup();
+        var bitnodeDensityGroup = L.layerGroup();
+        var landingPointsDensityGroup = L.layerGroup();
 
         var cables = $.getJSON("data/cables.json", function(data) {
             var cablesLayer = L.geoJSON(data, {
@@ -82,10 +65,10 @@
                     .setTooltipContent(tooltipInfo);
                 }
             });
-            map.addLayer(cablesLayer);
+            cablesGroup.addLayer(cablesLayer);
         });
 
-        var landingPoints = $.getJSON("data/landingPoints.json", function(data, currentLayer, currentState) {
+        var landingPoints = $.getJSON("data/landingPoints.json", function(data) {
 
             var geojsonMarkerOptions = {
                 radius: 3,
@@ -115,10 +98,10 @@
                     .setTooltipContent(tooltipInfo);
                 }
             });
-            map.addLayer(landingPointsLayer);
+            landingPointsGroup.addLayer(landingPointsLayer);
         });
 
-        var bitnodes = $.getJSON("data/bitnodes.json", function(data, currentLayer, currentState) {
+        var bitnodes = $.getJSON("data/bitnodes.json", function(data) {
 
             var geojsonMarkerOptions = {
                 radius: 3,
@@ -149,7 +132,7 @@
                     .setTooltipContent(tooltipInfo);
                 }
             });
-            map.addLayer(bitnodesLayer);
+            bitnodesGroup.addLayer(bitnodesLayer);
         });
 
         var bitnodes_density = $.getJSON("data/bitnodes.json", function(data) {
@@ -167,7 +150,7 @@
                 },
                 blur: 0
             });
-            //map.addLayer(heat);
+            bitnodeDensityGroup.addLayer(heat);
         });
 
         var landingPoint_density = $.getJSON("data/landingPoints.json", function(data) {
@@ -184,12 +167,54 @@
                 },
                 blur: 0
             });
-            //map.addLayer(heat);
+            landingPointsDensityGroup.addLayer(heat);
+        });
+
+        var baseMaps = {
+            "Stamen": tiles
+        };
+
+        var overlayMaps = {
+            "Submarine Cables": cablesGroup,
+            "Landing Points": landingPointsGroup,
+            "Bitnodes": bitnodesGroup,
+            "Bitnodes Density": bitnodeDensityGroup,
+            "Landing Points Density": landingPointsDensityGroup
+
+        };
+
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+    }
+
+    /*
+    function createCheckboxUI() {
+        // create Leaflet control for slider
+        var checkboxControl = L.control({
+            position: 'bottomleft'
+        });
+        // define the ui-control within the DOM
+        checkboxControl.onAdd = function(map) {
+            // use the defined ui-control element
+            var checkbox = L.DomUtil.get("ui-controls");
+            // diable click events
+            L.DomEvent.disableClickPropagation(checkbox);
+            return checkbox;
+        };
+        // add control to map
+        checkboxControl.addTo(map);
+
+        $("input[type='checkbox']").on('input change', function() {
+            // event defined as currentYear
+            var currentLayer = this.name;
+            var currentState = this.checked;
+            //drawMap(currentLayer, currentState);
         });
 
     }
 
-    /*function updateMap() {
+
+    function updateMap() {
 
         console.log([currentLayer, currentState]);
 
