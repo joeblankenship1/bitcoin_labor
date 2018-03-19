@@ -185,6 +185,9 @@
 
         L.control.layers(baseMaps, overlayMaps).addTo(map);
 
+        L.control.scale({
+            maxWidth: 100
+        }).addTo(map);
     }
 
     /*
