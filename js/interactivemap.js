@@ -18,43 +18,45 @@
         ext: 'png',
         opacity: 0.5
     }).addTo(map);
+    // request tiles_lite
     var tiles_lite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
     	attribution: '<a href="https://stamen.com">Stamen Design</a> - <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     	ext: 'png',
         opacity: 0.5
     });
-
+    // set the bounds for the initial map view
     map.fitBounds([
         [90, -180],
         [-90, 180]
     ]);
-
+    // set initial zoom for basemap
     map.setZoom(map.getZoom() - .2);
+    // set minZoom for layerGroups
     map._layersMinZoom=3;
 
-    //createCheckboxUI();
-    drawMap(tiles);
+    // call drawMap function to draw layerGroups on map
+    drawMap();
 
-    function drawMap(tiles) { // currentLayer, currentState
+    function drawMap() {
 
-        //console.log([currentLayer, currentState]);
-
+        // establish layerGroups variables for map layer control
         var cablesGroup = L.layerGroup();
         var landingPointsGroup = L.layerGroup();
         var bitnodesGroup = L.layerGroup();
         var bitnodeDensityGroup = L.layerGroup();
         var landingPointsDensityGroup = L.layerGroup();
 
+        // bring in cables data and add to layer group
         var cables = $.getJSON("data/cables.json", function(data) {
             var cablesLayer = L.geoJSON(data, {
-                style: function(feature) {
+                style: function(feature) { //style the layer
                     return {
                         color: '#163bd6',
                         weight: 3,
                         opacity: 0.4
                     };
                 },
-                onEachFeature: function(feature, layer) {
+                onEachFeature: function(feature, layer) { // tooltip setup
 
                     var props = layer.feature.properties;
 
@@ -70,9 +72,10 @@
                     .setTooltipContent(tooltipInfo);
                 }
             });
-            cablesGroup.addLayer(cablesLayer);
+            cablesGroup.addLayer(cablesLayer); // add layer with tooltip to layerGroup
         });
 
+        // bring in landingPoints data and add to layer group
         var landingPoints = $.getJSON("data/landingPoints.json", function(data) {
 
             var geojsonMarkerOptions = {
@@ -106,6 +109,7 @@
             landingPointsGroup.addLayer(landingPointsLayer);
         });
 
+        // bring in bitnodes data and add to layer group
         var bitnodes = $.getJSON("data/bitnodes.json", function(data) {
 
             var geojsonMarkerOptions = {
@@ -140,6 +144,7 @@
             bitnodesGroup.addLayer(bitnodesLayer);
         });
 
+        // bring in bitnodes data for heatmap
         var bitnodes_density = $.getJSON("data/bitnodes.json", function(data) {
 
             var locations = data.features.map(function(nodes) {
@@ -148,7 +153,7 @@
                 return location;
             });
 
-            var heat = L.heatLayer(locations, {
+            var heat = L.heatLayer(locations, { // setup heatmap with options
                 minOpacity: 0.1,
                 max: 0.9,
                 radius: 50,
@@ -161,6 +166,7 @@
             bitnodeDensityGroup.addLayer(heat);
         });
 
+        // bring in landingPoints data for heatmap
         var landingPoint_density = $.getJSON("data/landingPoints.json", function(data) {
             var locations = data.features.map(function(points) {
                 var location = points.geometry.coordinates.reverse();
@@ -181,11 +187,13 @@
             landingPointsDensityGroup.addLayer(heat);
         });
 
+        // setup basemaps section of layer controls
         var baseMaps = {
             "Stamen": tiles,
             "Stamen Lite": tiles_lite
         };
 
+        // setup overlaymaps section of layer controls
         var overlayMaps = {
             "Submarine Cables": cablesGroup,
             "Landing Points": landingPointsGroup,
@@ -194,61 +202,13 @@
             "Landing Points Density": landingPointsDensityGroup
         };
 
+        // add layer controls to map
         L.control.layers(baseMaps, overlayMaps).addTo(map);
 
+        // add scale bar to map
         L.control.scale({
             maxWidth: 100
         }).addTo(map);
     }
-
-    /*
-    function createCheckboxUI() {
-        // create Leaflet control for slider
-        var checkboxControl = L.control({
-            position: 'bottomleft'
-        });
-        // define the ui-control within the DOM
-        checkboxControl.onAdd = function(map) {
-            // use the defined ui-control element
-            var checkbox = L.DomUtil.get("ui-controls");
-            // diable click events
-            L.DomEvent.disableClickPropagation(checkbox);
-            return checkbox;
-        };
-        // add control to map
-        checkboxControl.addTo(map);
-
-        $("input[type='checkbox']").on('input change', function() {
-            // event defined as currentYear
-            var currentLayer = this.name;
-            var currentState = this.checked;
-            //drawMap(currentLayer, currentState);
-        });
-
-    }
-
-
-    function updateMap() {
-
-        console.log([currentLayer, currentState]);
-
-        if (currentLayer == 'cables') {
-            if (currentState == true) {
-                map.addLayer(cablesLayer);
-            }
-            else if (currentState == false) {
-                map.removeLayer(cablesLayer);
-            }
-        } else if (currentLayer == 'landingPoints') {
-
-        } else if (currentLayer == 'bitnodes_data') {
-            if (currentState == true) {
-                map.addLayer(bitnodesLayer);
-            }
-            else if (currentState == false) {
-                map.removeLayer(bitnodesLayer);
-            }
-        }
-    }*/
 
 })();
