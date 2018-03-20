@@ -18,6 +18,11 @@
         ext: 'png',
         opacity: 0.5
     }).addTo(map);
+    var tiles_lite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+    	attribution: '<a href="https://stamen.com">Stamen Design</a> - <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    	ext: 'png',
+        opacity: 0.5
+    });
 
     map.fitBounds([
         [90, -180],
@@ -45,8 +50,8 @@
                 style: function(feature) {
                     return {
                         color: '#163bd6',
-                        weight: 1.5,
-                        opacity: 1
+                        weight: 3,
+                        opacity: 0.4
                     };
                 },
                 onEachFeature: function(feature, layer) {
@@ -71,12 +76,12 @@
         var landingPoints = $.getJSON("data/landingPoints.json", function(data) {
 
             var geojsonMarkerOptions = {
-                radius: 3,
+                radius: 4,
                 fillColor: "#ff5959",
-                color: "#163bd6",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 1
+                color: "#f21010",
+                weight: 0.8,
+                opacity: 0.7,
+                fillOpacity: 0.4
             };
 
             var landingPointsLayer = L.geoJSON(data, {
@@ -104,12 +109,12 @@
         var bitnodes = $.getJSON("data/bitnodes.json", function(data) {
 
             var geojsonMarkerOptions = {
-                radius: 3,
+                radius: 4,
                 fillColor: "#dad147",
-                color: "#ff5959",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 1
+                color: "#bdb103",
+                weight: 0.8,
+                opacity: 0.7,
+                fillOpacity: 0.4
             };
 
             var bitnodesLayer = L.geoJSON(data, {
@@ -144,11 +149,14 @@
             });
 
             var heat = L.heatLayer(locations, {
-                radius: 25,
+                minOpacity: 0.1,
+                max: 0.9,
+                radius: 50,
                 gradient: {
-                    1: '#dad147'
+                    0.4: '#daa847',
+                    1: '#392809'
                 },
-                blur: 0
+                blur: 30
             });
             bitnodeDensityGroup.addLayer(heat);
         });
@@ -161,17 +169,21 @@
             });
 
             var heat = L.heatLayer(locations, {
-                radius: 25,
+                minOpacity: 0.1,
+                max: 0.9,
+                radius: 50,
                 gradient: {
-                    1: '#ff5959'
+                    0.4: '#ff5959',
+                    1: '#5c0000'
                 },
-                blur: 0
+                blur: 30
             });
             landingPointsDensityGroup.addLayer(heat);
         });
 
         var baseMaps = {
-            "Stamen": tiles
+            "Stamen": tiles,
+            "Stamen Lite": tiles_lite
         };
 
         var overlayMaps = {
@@ -180,7 +192,6 @@
             "Bitnodes": bitnodesGroup,
             "Bitnodes Density": bitnodeDensityGroup,
             "Landing Points Density": landingPointsDensityGroup
-
         };
 
         L.control.layers(baseMaps, overlayMaps).addTo(map);
