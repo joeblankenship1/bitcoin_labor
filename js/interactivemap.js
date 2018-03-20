@@ -53,11 +53,25 @@
                     return {
                         color: '#163bd6',
                         weight: 3,
-                        opacity: 0.4
+                        opacity: 0.5
                     };
                 },
-                onEachFeature: function(feature, layer) { // tooltip setup
+                onEachFeature: function(feature, layer) {
+                    // when hovering over cable
+                    layer.on('mouseover', function() {
+                        layer.setStyle({
+                            color: '#ff8a00'
+                        }).bringToFront();
+                    });
 
+                    // when not hovering over cable
+                    layer.on('mouseout', function() {
+                        layer.setStyle({
+                            color: '#163bd6'
+                        });
+                    });
+
+                    // tooltip setup
                     var props = layer.feature.properties;
 
                     var tooltipInfo = "<b>Owners: </b>" + props["owners"] +
@@ -79,7 +93,7 @@
         var landingPoints = $.getJSON("data/landingPoints.json", function(data) {
 
             var geojsonMarkerOptions = {
-                radius: 4,
+                radius: 5,
                 fillColor: "#ff5959",
                 color: "#f21010",
                 weight: 0.8,
@@ -92,6 +106,19 @@
                     return L.circleMarker(latlng, geojsonMarkerOptions)
                 },
                 onEachFeature: function(feature, layer) {
+                    // when hovering over landing point
+                    layer.on('mouseover', function() {
+                        layer.setStyle({
+                            fillColor: 'black'
+                        }).bringToFront();
+                    });
+
+                    // when not hovering over landing point
+                    layer.on('mouseout', function() {
+                        layer.setStyle({
+                            fillColor: '#ff5959'
+                        });
+                    });
 
                     var props = layer.feature.properties;
 
@@ -113,7 +140,7 @@
         var bitnodes = $.getJSON("data/bitnodes.json", function(data) {
 
             var geojsonMarkerOptions = {
-                radius: 4,
+                radius: 5,
                 fillColor: "#dad147",
                 color: "#bdb103",
                 weight: 0.8,
@@ -126,6 +153,19 @@
                     return L.circleMarker(latlng, geojsonMarkerOptions)
                 },
                 onEachFeature: function(feature, layer) {
+                    // when hovering over bitnode
+                    layer.on('mouseover', function() {
+                        layer.setStyle({
+                            fillColor: 'black'
+                        }).bringToFront();
+                    });
+
+                    // when not hovering over bitnode
+                    layer.on('mouseout', function() {
+                        layer.setStyle({
+                            fillColor: '#dad147'
+                        });
+                    });
 
                     var props = layer.feature.properties;
 
