@@ -114,7 +114,7 @@
             .attr("cy", function(d) {
                 return d.position[1];
             })
-            .attr("r", 3) // define size of circle
+            .attr("r", 2) // define size of circle
             .attr("class", "bitnode") // css styling
     }
 
@@ -137,7 +137,7 @@
             .attr("cy", function(d) {
                 return d.position[1];
             })
-            .attr("r", 3) // define size of circle
+            .attr("r", 2) // define size of circle
             .attr("class", "landing_point") // css styling
     }
 
@@ -178,19 +178,19 @@
                 cables.transition(t).style("opacity", 0)
             },
             one: () => {
-                bitnodes.transition(t).style("opacity", 1)
+                bitnodes.transition(t).style("opacity", 0.3)
                 landingPoints.transition(t).style("opacity", 0)
                 cables.transition(t).style("opacity", 0)
             },
             two: () => {
-                bitnodes.transition(t).style("opacity", 1)
-                landingPoints.transition(t).style("opacity", 1)
+                bitnodes.transition(t).style("opacity", 0.3)
+                landingPoints.transition(t).style("opacity", 0.3)
                 cables.transition(t).style("opacity", 0)
             },
             three: () => {
                 bitnodes.transition(t).style("opacity", 0)
-                landingPoints.transition(t).style("opacity", 1)
-                cables.transition(t).style("opacity", 1)
+                landingPoints.transition(t).style("opacity", 0.3)
+                cables.transition(t).style("opacity", 0.3)
             }
         }
 

@@ -7,6 +7,7 @@ html, body {
 body {
     min-height: 1280px;
     font-weight: 300;
+    background-color: #dadada;
     color: #2a2a2a;
 }
 
@@ -88,23 +89,21 @@ hr {
 
 .bitnode {
     fill: #dad147;
-    stroke: #ff5959;
-    stroke-width: .3;
+    stroke: #bdb103;
+    stroke-width: .2;
     opacity: 0;
 }
 
 .landing_point {
     fill: #ff5959;
-    stroke: #163bd6;
-    stroke-width: .3;
+    stroke: #f21010;
+    stroke-width: .2;
     opacity: 0;
 }
 
 .cables {
     fill: none;
     stroke: #163bd6;
-    stroke-dasharray: 2, 1;
-    stroke-linejoin: round;
     opacity: 0;
 }
 
@@ -137,11 +136,13 @@ hr {
     bottom: 0;
 }
 
-#ui-controls {
-    width: 176px;
+.leaflet-control-layers {
+    background: rgba(75, 75, 75, 0.9);
+}
+
+.leaflet-control-layers-list {
     padding: 8px 25px 8px 15px;
-    background: rgba(75, 75, 75, 0.8);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    background: transparent;
     border-radius: 5px;
     color: whitesmoke;
 }
