@@ -194,12 +194,13 @@
             });
 
             var heat = L.heatLayer(locations, { // setup heatmap with options
-                minOpacity: 0.1,
+                minOpacity: 0.4,
                 max: 0.9,
-                radius: 50,
+                radius: 25,
                 gradient: {
-                    0.4: '#daa847',
-                    1: '#392809'
+                    0.1: 'green',
+                    0.5: 'yellow',
+                    1.0: 'red'
                 },
                 blur: 30
             });
@@ -215,12 +216,13 @@
             });
 
             var heat = L.heatLayer(locations, {
-                minOpacity: 0.1,
+                minOpacity: 0.4,
                 max: 0.9,
-                radius: 50,
+                radius: 25,
                 gradient: {
-                    0.4: '#ff5959',
-                    1: '#5c0000'
+                    0.1: 'green',
+                    0.5: 'yellow',
+                    1.0: 'red'
                 },
                 blur: 30
             });
