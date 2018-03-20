@@ -17,7 +17,7 @@ p, h1, h2, h3, h4, a {
 }
 
 a, a:visited, a:hover {
-    color: #3b3b3b;
+    color: #575757;
     text-decoration: none;
     border-bottom: 1px solid currentColor;
 }
@@ -147,10 +147,6 @@ hr {
     color: whitesmoke;
 }
 
-.checkbox {
-    width: 100%;
-}
-
 .leaflet-tooltip {
     min-width: 140px;
     font-size: 140%;
@@ -196,7 +192,8 @@ hr {
 }
 
 .footer p {
-    color: #3b3b3b;
+    color: #575757;
     font-size: 1em;
     font-weight: 300;
+    line-height: 1.5;
 }
