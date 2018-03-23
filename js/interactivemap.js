@@ -142,7 +142,7 @@
             var geojsonMarkerOptions = {
                 radius: 5,
                 fillColor: "#dad147",
-                color: "#bdb103",
+                color: "#7a7100",
                 weight: 0.8,
                 opacity: 0.7,
                 fillOpacity: 0.4
