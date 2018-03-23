@@ -8,6 +8,7 @@
         zoomControl: true,
         center: [20, 0],
         zoom: 3,
+        worldCopyJump: true,
         layer: [tiles]
     };
     // create the Leaflet map
