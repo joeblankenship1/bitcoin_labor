@@ -30,13 +30,13 @@
         // this will also initialize trigger observations
         // 3. bind scrollama event handlers (this can be chained like below)
         scroller.setup({
-            container: '#scroll',
-            graphic: '.scroll__graphic',
-            text: '.scroll__text',
-            step: '.scroll__text .step',
-            offset: 0.95, // set the trigger to be 95% down screen
-			//debug: true, // display the trigger offset for testing
-        })
+                container: '#scroll',
+                graphic: '.scroll__graphic',
+                text: '.scroll__text',
+                step: '.scroll__text .step',
+                offset: 0.95, // set the trigger to be 95% down screen
+                //debug: true, // display the trigger offset for testing
+            })
             .onStepEnter(handleStepEnter)
             .onContainerEnter(handleContainerEnter)
             .onContainerExit(handleContainerExit);
@@ -162,8 +162,8 @@
 
         // set linear fade in/out for each layer
         const t = d3.transition()
-                    .duration(400)
-                    .ease(d3.easeLinear);
+            .duration(400)
+            .ease(d3.easeLinear);
 
         // define which css styling you need to modify - will render per step
         const bitnodes = d3.selectAll(".bitnode");
@@ -197,14 +197,18 @@
         // use switchLayer actions above to tell scrollama
         // how each step should render the layers
         switch (num) {
-            case 0: switchLayer.zero()
-            break
-            case 1: switchLayer.one()
-            break
-            case 2: switchLayer.two()
-            break
-            case 3: switchLayer.three()
-            break
+            case 0:
+                switchLayer.zero()
+                break
+            case 1:
+                switchLayer.one()
+                break
+            case 2:
+                switchLayer.two()
+                break
+            case 3:
+                switchLayer.three()
+                break
         }
 
     }
@@ -236,7 +240,7 @@
         // response = { element, direction, index }
 
         // add color to current step only
-        step.classed('is-active', function (d, i) {
+        step.classed('is-active', function(d, i) {
             return i === response.index;
         })
 

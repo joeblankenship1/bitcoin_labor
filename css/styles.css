@@ -46,9 +46,7 @@ hr {
     text-transform: uppercase;
     font-weight: 900;
     letter-spacing: 0.05em;
-    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
-    #dad147 85%,
-    rgba(255, 255, 255, 0));
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0), #dad147 85%, rgba(255, 255, 255, 0));
 }
 
 .intro__dek {
@@ -90,23 +88,17 @@ hr {
 }
 
 .highlight-yellow {
-    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
-    #dad147 85%,
-    rgba(255, 255, 255, 0));
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0), #dad147 85%, rgba(255, 255, 255, 0));
     font-weight: bold;
 }
 
 .highlight-red {
-    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
-    #ff5959 85%,
-    rgba(255, 255, 255, 0));
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0), #ff5959 85%, rgba(255, 255, 255, 0));
     font-weight: bold;
 }
 
 .highlight-blue {
-    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
-    #163bd6 38%,
-    rgba(255, 255, 255, 0));
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0), #163bd6 38%, rgba(255, 255, 255, 0));
     font-weight: bold;
 }
 
@@ -197,9 +189,7 @@ hr {
     text-transform: uppercase;
     font-weight: 900;
     letter-spacing: 0.05em;
-    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
-    #dad147 85%,
-    rgba(255, 255, 255, 0));
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0), #dad147 85%, rgba(255, 255, 255, 0));
 }
 
 .outro__dek {

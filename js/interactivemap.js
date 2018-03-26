@@ -21,8 +21,8 @@
     }).addTo(map);
     // request tiles_lite
     var tiles_lite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
-    	attribution: '<a href="https://stamen.com">Stamen Design</a> - <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    	ext: 'png',
+        attribution: '<a href="https://stamen.com">Stamen Design</a> - <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        ext: 'png',
         opacity: 0.5
     });
     // set the bounds for the initial map view
@@ -33,7 +33,7 @@
     // set initial zoom for basemap
     map.setZoom(map.getZoom() - .2);
     // set minZoom for layerGroups
-    map._layersMinZoom=3;
+    map._layersMinZoom = 3;
 
     // call drawMap function to draw layerGroups on map
     drawMap();
@@ -76,15 +76,15 @@
                     var props = layer.feature.properties;
 
                     var tooltipInfo = "<b>Owners: </b>" + props["owners"] +
-    								"<br><b>Name: </b>" + props["name"] +
-    								"<br><b>Cable ID: </b>" + props["cable_id"] +
-    								"<br><b>RFS: </b>" + props["rfs"];
+                        "<br><b>Name: </b>" + props["name"] +
+                        "<br><b>Cable ID: </b>" + props["cable_id"] +
+                        "<br><b>RFS: </b>" + props["rfs"];
 
                     layer.bindTooltip('', {
-                        sticky: true,
-                        tooltipAnchor: [200, 200]
-                    })
-                    .setTooltipContent(tooltipInfo);
+                            sticky: true,
+                            tooltipAnchor: [200, 200]
+                        })
+                        .setTooltipContent(tooltipInfo);
                 }
             });
             cablesGroup.addLayer(cablesLayer); // add layer with tooltip to layerGroup
@@ -124,14 +124,14 @@
                     var props = layer.feature.properties;
 
                     var tooltipInfo = "<b>Owners: </b>" + props["owners"] +
-    								"<br><b>Name: </b>" + props["name"] +
-    								"<br><b>Cable ID: </b>" + props["cable_id"];
+                        "<br><b>Name: </b>" + props["name"] +
+                        "<br><b>Cable ID: </b>" + props["cable_id"];
 
                     layer.bindTooltip('', {
-                        sticky: true,
-                        tooltipAnchor: [200, 200]
-                    })
-                    .setTooltipContent(tooltipInfo);
+                            sticky: true,
+                            tooltipAnchor: [200, 200]
+                        })
+                        .setTooltipContent(tooltipInfo);
                 }
             });
             landingPointsGroup.addLayer(landingPointsLayer);
@@ -171,15 +171,15 @@
                     var props = layer.feature.properties;
 
                     var tooltipInfo = "<b>Organization: </b>" + props["Organization_name"] +
-    								"<br><b>City: </b>" + props["City"] +
-    								"<br><b>Country: </b>" + props["Country_code"] +
-                                    "<br><b>ASN: </b>" + props["ASN"];
+                        "<br><b>City: </b>" + props["City"] +
+                        "<br><b>Country: </b>" + props["Country_code"] +
+                        "<br><b>ASN: </b>" + props["ASN"];
 
                     layer.bindTooltip('', {
-                        sticky: true,
-                        tooltipAnchor: [200, 200]
-                    })
-                    .setTooltipContent(tooltipInfo);
+                            sticky: true,
+                            tooltipAnchor: [200, 200]
+                        })
+                        .setTooltipContent(tooltipInfo);
                 }
             });
             bitnodesGroup.addLayer(bitnodesLayer);
