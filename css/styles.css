@@ -148,7 +148,7 @@ hr {
 }
 
 .leaflet-tooltip {
-    min-width: 400px;
+    min-width: 250px;
     font-size: 120%;
     white-space: normal;
     padding: 6px 12px 3px;
