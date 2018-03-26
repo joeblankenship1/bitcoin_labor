@@ -46,7 +46,9 @@ hr {
     text-transform: uppercase;
     font-weight: 900;
     letter-spacing: 0.05em;
-    text-shadow: #FC0 1px 0 10px;
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
+    #dad147 85%,
+    rgba(255, 255, 255, 0));
 }
 
 .intro__dek {
@@ -85,6 +87,27 @@ hr {
     -moz-transform: translateY(0);
     -webkit-transform: translateY(0);
     transform: translateY(0);
+}
+
+.highlight-yellow {
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
+    #dad147 85%,
+    rgba(255, 255, 255, 0));
+    font-weight: bold;
+}
+
+.highlight-red {
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
+    #ff5959 85%,
+    rgba(255, 255, 255, 0));
+    font-weight: bold;
+}
+
+.highlight-blue {
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
+    #163bd6 38%,
+    rgba(255, 255, 255, 0));
+    font-weight: bold;
 }
 
 .bitnode {
@@ -174,7 +197,9 @@ hr {
     text-transform: uppercase;
     font-weight: 900;
     letter-spacing: 0.05em;
-    text-shadow: #FC0 1px 0 10px;
+    background-image: linear-gradient(-100deg, rgba(255, 255, 255, 0),
+    #dad147 85%,
+    rgba(255, 255, 255, 0));
 }
 
 .outro__dek {
